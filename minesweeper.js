@@ -14,6 +14,13 @@ const ePauseMenu = document.querySelector(".Pause-menu");
 const eResumeBtn = document.querySelector("#resumeButton");
 const ePauseMenuBtn = document.querySelector("#menuButton");
 const ePauseBtn = document.querySelector("#restartButton");
+const eGameTittle = document.querySelector(".game-title")
+const eSetSettings = document.querySelector("#setSettings")
+const eSettingsShow = document.querySelector("#settings")
+const eVolumeSet = document.querySelector("#volumeSet")
+const eMusicSet = document.querySelector("#musicSet")
+const eInfoVolume = document.querySelector("#infoVolume")
+const eInfoMusic = document.querySelector("#infoMusic")
 
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
@@ -34,11 +41,16 @@ let iTS;
 let isPlaying = false
 let pauseClick = false
 let fail = false
+let showSetting = false
+let volumeSet = 100;
+let musicSet = 100;
 
 const createImgElem = (s) => `<img src='${s}' />`;
 const MINE_IMG = createImgElem("./assets/mine.png");
 const FLAG_IMG = createImgElem("./assets/flag.png");
 const WRONG_FLAG_OVERLAY_IMG = createImgElem("./assets/wrong_flag_overlay.png");
+
+const tittleText = "NSWAPEER"
 
 const NUMBER_COLORS = [
   "0201ff",
@@ -50,6 +62,38 @@ const NUMBER_COLORS = [
   "010101",
   "828282",
 ];
+
+const NUMBER_COLORS_TEXT = [
+  "#0201ff",
+  "#1c7718",
+  "#fa0300",
+  "#00007f",
+  "#7c0000",
+  "#038082",
+  "#010101",
+  "#828282",
+];
+
+function generateText(text) {
+  const divText = document.createElement('div');
+  eGameTittle.appendChild(divText)
+  for (let i = 0; i < text.length; i++) {
+    const spanText = document.createElement('span');
+    spanText.textContent = text[i];
+    spanText.id = `span${i}`
+    divText.appendChild(spanText);
+  }
+  return divText.children;
+}
+function textColorAndTetx() {
+  const generateBoard = (generateText(tittleText))
+  for (let i = 0; i < tittleText.length; i++) {
+    const spanTextColor = document.getElementById(`span${i}`)
+    spanTextColor.style.color = NUMBER_COLORS_TEXT[i];
+  }
+}
+textColorAndTetx();
+
 
 const padNum = (s) => {
   return s.toString().padStart(2, "0");
@@ -320,6 +364,14 @@ function revealCell(x, y) {
     });
   }
 }
+function volumeChange() {
+  click.volume = volumeSet;
+  wind.volume = volumeSet;
+  gameOver.volume = volumeSet;
+  sliderSound.volume = volumeSet;
+  bigBoom.volume = volumeSet / 10;
+}
+
 
 function getCell(x, y) {
   return eBoard.children[x].children[y];
@@ -338,6 +390,20 @@ function generateBoard() {
       }
     }
     board.push(row);
+  }
+}
+function showSettings() {
+  if (showSetting === false) {
+    eSetSettings.style.visibility = "visible";
+    wind.play();
+    showSetting = true
+    return;
+  }
+  if (showSetting === true) {
+    eSetSettings.style.visibility = "hidden";
+    wind.play();
+    showSetting = false
+    return;
   }
 }
 
@@ -384,8 +450,10 @@ eGameSelectRadio.forEach(radio => {
     click.play();
     if (radio.id === 'custom') {
       eCustomiser.style.visibility = 'visible'
+      eGameStart.style.marginTop = "100px";
     } else {
       eCustomiser.style.visibility = 'hidden'
+      eGameStart.style.marginTop = "0px";
     }
   })
 
@@ -402,3 +470,24 @@ eResumeBtn.addEventListener('click', () => {
   pauseGame()
 })
 
+eSettingsShow.addEventListener("click", () => {
+  showSettings()
+})
+
+eVolumeSet.addEventListener("input", () => {
+  volumeSet = eVolumeSet.value
+  if (volumeSet == 0) {
+    eInfoVolume.innerHTML = `OFF`
+  } else {
+    eInfoVolume.innerHTML = `${Math.round(volumeSet * 100)}%`
+  }
+  volumeChange()
+})
+eMusicSet.addEventListener("input", () => {
+  musicSet = eMusicSet.value
+  if (musicSet == 0) {
+    eInfoMusic.innerHTML = `OFF`
+  } else {
+    eInfoMusic.innerHTML = `${Math.round(musicSet * 100)}%`
+  }
+})

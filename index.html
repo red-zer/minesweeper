@@ -10,18 +10,24 @@
 <body>
   <div id="menu">
     <h1 class="game-title">
-      <p id="titleM">M</p>
+      <p style="color: #038082;">M</p>
       <img src="./assets/flag.png" alt="" style="height: 1ch" />
-      <p id="titleN">N</p>
-      <p class="titleE">E</p>
-      <p id="titleS">S</p>
-      <p id="titleW">W</p>
-      <p class="titleE">E</p>
-      <p class="titleE">E</p>
-      <p id="titleP">P</p>
-      <p class="titleE">E</p>
-      <p id="titleR">R</p>
     </h1>
+    <div id="setting">
+      <div id="settings">
+        <div id="gear"><span></span></div>
+      </div>
+      <div id="setSettings">
+        <div id="soundsSet">
+          <label for="volumeSet">Volume:</label>
+          <input type="range" id="volumeSet" min="0.0" max="1.0" value="1.0" step="0.01">
+          <p id="infoVolume">100%</p>
+          <label for="musicSet">Music:</label>
+          <input type="range" id="musicSet" min="0.0" max="1.0" value="1.0" step="0.01">
+          <p id="infoMusic">100%</p>
+        </div>
+      </div>
+    </div>
     <div class="game-select-container">
       <div>
         <div>
@@ -102,14 +108,14 @@
     },
   };
 
-  function setAttrInfo({mode, width, height, mines}) {
+  function setAttrInfo({ mode, width, height, mines }) {
     const eInput = document.querySelector(`#${mode}`)
     eInput.setAttribute("data-width", width)
     eInput.setAttribute("data-height", height)
     eInput.setAttribute("data-mines", mines)
   }
 
-  function setLevelInfo({mode, width, height, mines}) {
+  function setLevelInfo({ mode, width, height, mines }) {
     gameModes[mode].width = width
     gameModes[mode].height = height
     gameModes[mode].mines = mines
@@ -120,26 +126,26 @@
     const eData = document.createElement("div");
     eData.innerHTML = `<p id="${mode}-info"> ${width}x${height} ${mines * 100}% mines</p>`;
     elem.appendChild(eData);
-    setAttrInfo({mode: mode, width: width, height: height, mines: mines})
+    setAttrInfo({ mode: mode, width: width, height: height, mines: mines })
   }
 
   document.querySelector("#slider-mine").addEventListener("input", () => {
     sliderSound.play();
     const wh = parseInt(document.querySelector("#slider-w-and-h").value)
     const mines = parseFloat(document.querySelector("#slider-mine").value)
-    setLevelInfo({mode: "custom", width: wh, height: wh, mines: mines})
+    setLevelInfo({ mode: "custom", width: wh, height: wh, mines: mines })
     const customInfo = document.getElementById("custom-info");
     customInfo.innerHTML = `<p>${wh}x${wh} ${Math.round(mines * 100)}% mines</p>`;
-    setAttrInfo({mode: "custom", width: wh, height: wh, mines: mines})
+    setAttrInfo({ mode: "custom", width: wh, height: wh, mines: mines })
   });
   document.querySelector("#slider-w-and-h").addEventListener("input", () => {
     sliderSound.play();
     const wh = parseInt(document.querySelector("#slider-w-and-h").value)
     const mines = parseFloat(document.querySelector("#slider-mine").value)
-    setLevelInfo({mode: "custom", width: wh, height: wh, mines: mines})
+    setLevelInfo({ mode: "custom", width: wh, height: wh, mines: mines })
     const customInfo = document.getElementById("custom-info");
     customInfo.innerHTML = `<p>${wh}x${wh} ${Math.round(mines * 100)}% mines</p>`;
-    setAttrInfo({mode:  "custom", width: wh, height: wh, mines: mines})
+    setAttrInfo({ mode: "custom", width: wh, height: wh, mines: mines })
   });
 </script>
 <script src="./minesweeper.js"></script>
