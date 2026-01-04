@@ -21,6 +21,13 @@ const eVolumeSet = document.querySelector("#volumeSet")
 const eMusicSet = document.querySelector("#musicSet")
 const eInfoVolume = document.querySelector("#infoVolume")
 const eInfoMusic = document.querySelector("#infoMusic")
+const eGameSelect = document.querySelector(".game-select-container")
+const eCustomiserShow = document.querySelectorAll(".customiser")
+const eDarkModeBtn = document.querySelector("#darkModeBtn")
+const eLightModeBtn = document.querySelector("#lightModeBtn")
+const eSoundsSet = document.querySelector("#soundsSet")
+const eTimeStatText = document.querySelector(".time")
+const eMineStatText = document.querySelector(".mines")
 
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
@@ -94,6 +101,42 @@ function textColorAndTetx() {
 }
 textColorAndTetx();
 
+function darkMode() {
+  click.play();
+  eDarkModeBtn.style.border = "5px solid #444"
+  eDarkModeBtn.style.backgroundColor = "#666";
+  eLightModeBtn.style.border = "3px solid #444";
+  eLightModeBtn.style.backgroundColor = "#666";
+  document.body.style.backgroundImage = "radial-gradient(#333, #222 75%)";
+  eSoundsSet.style.border = "5px solid #444"
+  eSetSettings.style.backgroundColor = "#666";
+  eSetSettings.style.border = "5px solid #444"
+  eTimeStatText.style.border = "4px solid #444"
+  eMineStatText.style.border = "4px solid #444"
+  eTimeStatText.style.backgroundColor = "#0008";
+  eMineStatText.style.backgroundColor = "#0008";
+  eOverlay.style.backgroundColor = "#4448";
+  //--------------------------------------------//
+}
+function ligthMode() {
+  click.play();
+  eDarkModeBtn.style.border = "3px solid #ccc"
+  eDarkModeBtn.style.backgroundColor = "#eee";
+  eLightModeBtn.style.border = "5px solid #ccc";
+  eLightModeBtn.style.backgroundColor = "#eee";
+  document.body.style.backgroundImage = "radial-gradient(#fff, #e6e6e6 75%)";
+  eSoundsSet.style.border = "5px solid #ccc";
+  eSetSettings.style.backgroundColor = "#eee";
+  eSetSettings.style.border = "5px solid #ccc";
+  eTimeStatText.style.border = "4px solid #ccc";
+  eMineStatText.style.border = "4px solid #ccc";
+  eTimeStatText.style.backgroundColor = "#fff8";
+  eMineStatText.style.backgroundColor = "#fff8";
+  eOverlay.style.backgroundColor = "#fff8";
+
+}
+
+darkMode();
 
 const padNum = (s) => {
   return s.toString().padStart(2, "0");
@@ -395,12 +438,18 @@ function generateBoard() {
 function showSettings() {
   if (showSetting === false) {
     eSetSettings.style.visibility = "visible";
+    eGameSelect.style.visibility = "hidden";
+    eCustomiser.style.visibility = "hidden";
     wind.play();
     showSetting = true
     return;
   }
   if (showSetting === true) {
     eSetSettings.style.visibility = "hidden";
+    eGameSelect.style.visibility = "visible";
+    if (document.getElementById('custom').checked) {
+      eCustomiser.style.visibility = "visible";
+    }
     wind.play();
     showSetting = false
     return;
@@ -418,7 +467,6 @@ eGameStart.addEventListener("click", () => {
   gameScreen.classList.remove("hidden")
   menuScreen.classList.add("hidden")
   revealedCells = newMatrix(WIDTH, HEIGHT, false);
-
   createDOM();
   ePauseBtn.addEventListener("click", () => { restartGame(); createDOM(); pauseGame() });
   eRestartBtn.addEventListener("click", () => { restartGame(); createDOM() });
@@ -491,3 +539,9 @@ eMusicSet.addEventListener("input", () => {
     eInfoMusic.innerHTML = `${Math.round(musicSet * 100)}%`
   }
 })
+eDarkModeBtn.addEventListener("click", () => {
+  darkMode();
+});
+eLightModeBtn.addEventListener("click", () => {
+  ligthMode();
+});
