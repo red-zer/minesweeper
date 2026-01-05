@@ -132,7 +132,9 @@ img {
 #settingsButton {
   transition-delay: 200ms;
 }
-
+#pauseSettings {
+  transition-delay: 250ms;
+}
 .game-over.show * {
   transform: translateY(0);
 }
@@ -354,9 +356,23 @@ img {
 }
 
 #darkModeBtn,
-#lightModeBtn {
+#lightModeBtn,
+#pauseDarkModeBtn,
+#pauseLightModeBtn {
   margin-top: 10px;
   padding: 5px;
   font-size: x-large;
   cursor: pointer;
+  margin-bottom: 5px;
+}
+#pauseSettings {
+  visibility: hidden;
+  width: 10rem;
+  height: fit-content;
+  background-color: #666;
+  border: 5px solid #444;
+}
+#pauseSettings {
+  color: black;
+  text-shadow: none;
 }

@@ -76,7 +76,24 @@
       <button id="restartButton">Restart</button>
       <button id="menuButton">Menu</button>
       <button id="settingsButton">Settings</button>
+      <div id="pauseSettings">
+        <div id="pauseSetSettings">
+          <div id="pauseSoundsSet">
+            <label for="pauseVolumeSet">Volume:</label>
+            <input type="range" id="pauseVolumeSet" min="0.0" max="1.0" value="1.0" step="0.01">
+            <p id="pauseInfoVolume">100%</p>
+            <label for="pauseMusicSet">Music:</label>
+            <input type="range" id="pauseMusicSet" min="0.0" max="1.0" value="1.0" step="0.01">
+            <p id="pauseInfoMusic">100%</p>
+          </div>
+          <div id="pauseLigthAndDark">
+            <button id="pauseDarkModeBtn">🌤</button>
+            <button id="pauseLightModeBtn">⛅️</button>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="stats">
       <div class="time">
         <p class="time-text">Time:</p>

@@ -25,9 +25,18 @@ const eGameSelect = document.querySelector(".game-select-container")
 const eCustomiserShow = document.querySelectorAll(".customiser")
 const eDarkModeBtn = document.querySelector("#darkModeBtn")
 const eLightModeBtn = document.querySelector("#lightModeBtn")
+const eDarkModeBtnPause = document.querySelector("#pauseDarkModeBtn")
+const eLightModeBtnPause = document.querySelector("#pauseLightModeBtn")
 const eSoundsSet = document.querySelector("#soundsSet")
 const eTimeStatText = document.querySelector(".time")
 const eMineStatText = document.querySelector(".mines")
+const eSettingsPauseBtn = document.querySelector("#settingsButton")
+const eSetting = document.querySelector("#setting")
+const eSettingPause = document.querySelector("#pauseSettings")
+const ePauseVolumeSet = document.querySelector("#pauseVolumeSet")
+const ePauseMusicSet = document.querySelector("#pauseMusicSet")
+const ePauseInfoVolume = document.querySelector("#pauseInfoVolume")
+const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
 
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
@@ -45,10 +54,11 @@ let totalMines = 0;
 let flagsPlaced = 0;
 let startTS;
 let iTS;
-let isPlaying = false
-let pauseClick = false
-let fail = false
-let showSetting = false
+let isPlaying = false;
+let pauseClick = false;
+let fail = false;
+let showSetting = false;
+let showSettingsPause = false;
 let volumeSet = 100;
 let musicSet = 100;
 
@@ -103,16 +113,20 @@ textColorAndTetx();
 
 function darkMode() {
   click.play();
-  eDarkModeBtn.style.border = "5px solid #444"
+  eDarkModeBtn.style.border = "5px solid #444";
   eDarkModeBtn.style.backgroundColor = "#666";
   eLightModeBtn.style.border = "3px solid #444";
   eLightModeBtn.style.backgroundColor = "#666";
+  eLightModeBtnPause.style.border = "3px solid #444";
+  eLightModeBtnPause.style.backgroundColor = "#666";
+  eDarkModeBtnPause.style.border = "5px solid #444";
+  eDarkModeBtnPause.style.backgroundColor = "#666";
   document.body.style.backgroundImage = "radial-gradient(#333, #222 75%)";
-  eSoundsSet.style.border = "5px solid #444"
+  eSoundsSet.style.border = "5px solid #444";
   eSetSettings.style.backgroundColor = "#666";
-  eSetSettings.style.border = "5px solid #444"
-  eTimeStatText.style.border = "4px solid #444"
-  eMineStatText.style.border = "4px solid #444"
+  eSetSettings.style.border = "5px solid #444";
+  eTimeStatText.style.border = "4px solid #444";
+  eMineStatText.style.border = "4px solid #444";
   eTimeStatText.style.backgroundColor = "#0008";
   eMineStatText.style.backgroundColor = "#0008";
   eOverlay.style.backgroundColor = "#4448";
@@ -124,6 +138,10 @@ function ligthMode() {
   eDarkModeBtn.style.backgroundColor = "#eee";
   eLightModeBtn.style.border = "5px solid #ccc";
   eLightModeBtn.style.backgroundColor = "#eee";
+  eLightModeBtnPause.style.border = "5px solid #ccc";
+  eLightModeBtnPause.style.backgroundColor = "#eee";
+  eDarkModeBtnPause.style.border = "3px solid #ccc";
+  eDarkModeBtnPause.style.backgroundColor = "#eee";
   document.body.style.backgroundImage = "radial-gradient(#fff, #e6e6e6 75%)";
   eSoundsSet.style.border = "5px solid #ccc";
   eSetSettings.style.backgroundColor = "#eee";
@@ -186,6 +204,8 @@ const restartGame = () => {
 
 function pauseGame() {
   if (pauseClick === true) {
+    showSettingsPause = false;
+    eSettingPause.style.visibility = "hidden";
     pauseClick = false
     ePauseMenu.style.visibility = 'hidden'
     document.body.style.overflow = "auto";
@@ -522,26 +542,60 @@ eSettingsShow.addEventListener("click", () => {
   showSettings()
 })
 
-eVolumeSet.addEventListener("input", () => {
-  volumeSet = eVolumeSet.value
-  if (volumeSet == 0) {
-    eInfoVolume.innerHTML = `OFF`
+function syncVolume(source, target) {
+  volumeSet = Number(source.value);
+  source.value = volumeSet;
+  target.value = volumeSet;
+
+  if (volumeSet === 0) {
+    eInfoVolume.innerHTML = "OFF";
+    ePauseInfoVolume.innerHTML = "OFF";
   } else {
-    eInfoVolume.innerHTML = `${Math.round(volumeSet * 100)}%`
+    const percent = Math.round(volumeSet * 100) + "%";
+    eInfoVolume.innerHTML = percent;
+    ePauseInfoVolume.innerHTML = percent;
   }
-  volumeChange()
-})
-eMusicSet.addEventListener("input", () => {
-  musicSet = eMusicSet.value
-  if (musicSet == 0) {
-    eInfoMusic.innerHTML = `OFF`
+
+  volumeChange();
+}
+
+function syncMusic(source, target) {
+  musicSet = Number(source.value);
+  source.value = musicSet;
+  target.value = musicSet;
+
+  if (musicSet === 0) {
+    eInfoMusic.innerHTML = "OFF";
+    ePauseInfoMusic.innerHTML = "OFF";
   } else {
-    eInfoMusic.innerHTML = `${Math.round(musicSet * 100)}%`
+    const percent = Math.round(musicSet * 100) + "%";
+    eInfoMusic.innerHTML = percent;
+    ePauseInfoMusic.innerHTML = percent;
   }
-})
-eDarkModeBtn.addEventListener("click", () => {
-  darkMode();
-});
-eLightModeBtn.addEventListener("click", () => {
-  ligthMode();
+}
+
+eVolumeSet.addEventListener("input", e => syncVolume(e.target, ePauseVolumeSet));
+ePauseVolumeSet.addEventListener("input", e => syncVolume(e.target, eVolumeSet));
+
+eMusicSet.addEventListener("input", e => syncMusic(e.target, ePauseMusicSet));
+ePauseMusicSet.addEventListener("input", e => syncMusic(e.target, eMusicSet));
+
+eDarkModeBtn.addEventListener("click", () => { darkMode(); });
+eDarkModeBtnPause.addEventListener("click", () => { darkMode(); });
+
+eLightModeBtn.addEventListener("click", () => { ligthMode(); });
+eLightModeBtnPause.addEventListener("click", () => { ligthMode(); });
+
+eSettingsPauseBtn.addEventListener("click", () => {
+  console.log("work");
+  if (showSettingsPause === true) {
+    showSettingsPause = false;
+    eSettingPause.style.visibility = "hidden";
+    return;
+  }
+  if (showSettingsPause === false) {
+    showSettingsPause = true;
+    eSettingPause.style.visibility = "visible";
+    return;
+  }
 });
