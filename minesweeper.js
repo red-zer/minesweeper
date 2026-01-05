@@ -40,11 +40,15 @@ const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
 const ePauseSettings = document.querySelector("#pauseSettings")
 const eBackBtn = document.querySelector("#Back")
 
+const eMusic = document.querySelector("#music");
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
 const gameOver = new Audio('sounds/you-lose.mp3');
 const sliderSound = new Audio('sounds/slider.mp3');
 const bigBoom = new Audio('sounds/nuke-bomb.mp3');
+
+eMusic.play();
+eMusic.loop = true;
 
 let WIDTH = 16;
 let HEIGHT = 16;
@@ -457,7 +461,14 @@ function volumeChange() {
   sliderSound.volume = volumeSet;
   bigBoom.volume = volumeSet / 10;
 }
-
+function musicChange() {
+  eMusic.volume = musicSet;
+  if (musicSet === 0) {
+    eMusic.pause();
+  } else {
+    eMusic.play();
+  }
+}
 
 function getCell(x, y) {
   return eBoard.children[x].children[y];
@@ -566,6 +577,7 @@ eSettingsShow.addEventListener("click", () => {
 })
 
 function syncVolume(source, target) {
+  sliderSound.play();
   volumeSet = Number(source.value);
   source.value = volumeSet;
   target.value = volumeSet;
@@ -582,6 +594,7 @@ function syncVolume(source, target) {
 }
 
 function syncMusic(source, target) {
+  sliderSound.play();
   musicSet = Number(source.value);
   source.value = musicSet;
   target.value = musicSet;
@@ -594,6 +607,7 @@ function syncMusic(source, target) {
     eInfoMusic.innerHTML = percent;
     ePauseInfoMusic.innerHTML = percent;
   }
+  musicChange();
 }
 
 eVolumeSet.addEventListener("input", e => syncVolume(e.target, ePauseVolumeSet));
@@ -632,7 +646,7 @@ eBackBtn.addEventListener("click", () => {
     eResumeBtn.style.visibility = "visible";
     ePauseMenuBtn.style.visibility = "visible";
     ePauseBtn.style.visibility = "visible";
-    eBackBtn.style.marginTop = "0px";
+    //eBackBtn.style.marginTop = "0px";
     return;
   }
 });
