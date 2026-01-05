@@ -39,40 +39,53 @@ const ePauseInfoVolume = document.querySelector("#pauseInfoVolume")
 const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
 const ePauseSettings = document.querySelector("#pauseSettings")
 const eBackBtn = document.querySelector("#Back")
+//-------------------------------- DOM Elements -----------------------------//
 
+//------------------------------- music -------------------------------------//
 const eMusic = document.querySelector("#music");
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
 const gameOver = new Audio('sounds/you-lose.mp3');
 const sliderSound = new Audio('sounds/slider.mp3');
 const bigBoom = new Audio('sounds/nuke-bomb.mp3');
+//------------------------------- music --------------------------------------//
 
 eMusic.play();
 eMusic.loop = true;
 
+//-------------------------------- varibles ----------------------------------//
 let WIDTH = 16;
 let HEIGHT = 16;
 let MINES = 0.2;
+
 let revealedCells = newMatrix(WIDTH, HEIGHT, false);
 let board = [];
+
 let isFirstClick = true;
 let totalMines = 0;
 let flagsPlaced = 0;
+
 let startTS;
 let iTS;
+
 let isPlaying = false;
 let pauseClick = false;
 let fail = false;
 let showSetting = false;
 let showSettingsPause = false;
+
 let volumeSet = 100;
 let musicSet = 100;
+//-------------------------------- varibles -----------------------------------//
 
+//------------------------------- images --------------------------------------//
 const createImgElem = (s) => `<img src='${s}' />`;
 const MINE_IMG = createImgElem("./assets/mine.png");
 const FLAG_IMG = createImgElem("./assets/flag.png");
 const WRONG_FLAG_OVERLAY_IMG = createImgElem("./assets/wrong_flag_overlay.png");
+//------------------------------- images --------------------------------------//
 
+//------------------------------- title generate ------------------------------//
 const tittleText = "NSWAPEER"
 
 const NUMBER_COLORS = [
@@ -116,7 +129,9 @@ function textColorAndTetx() {
   }
 }
 textColorAndTetx();
+//------------------------------- title generate -------------------------------//
 
+//------------------------------ dark and ligth mode----------------------------//
 function darkMode() {
   click.play();
   eDarkModeBtn.style.border = "5px solid #444";
@@ -136,7 +151,6 @@ function darkMode() {
   eTimeStatText.style.backgroundColor = "#0008";
   eMineStatText.style.backgroundColor = "#0008";
   eOverlay.style.backgroundColor = "#4448";
-  //--------------------------------------------//
   ePauseSettings.style.border = "5px solid #444";
   ePauseSettings.style.backgroundColor = "#666";
 }
@@ -165,6 +179,9 @@ function ligthMode() {
 
 darkMode();
 
+//------------------------------ dark and ligth mode----------------------------//
+
+//---------------------informatin about mines left and time---------------------//
 const padNum = (s) => {
   return s.toString().padStart(2, "0");
 };
@@ -176,7 +193,9 @@ const updateTimeStat = () => {
 const updateMineStat = () => {
   eMineStat.innerHTML = padNum(totalMines - flagsPlaced);
 };
+//---------------------informatin about mines left and time---------------------//
 
+//--------------------------------start game------------------------------------//
 const startGame = (x, y) => {
   fail = false
   isFirstClick = false;
@@ -195,7 +214,9 @@ const startGame = (x, y) => {
   updateMineStat();
   updateTimeStat();
 };
+//--------------------------------start game------------------------------------//
 
+//-------------------------------restart game-----------------------------------//
 const restartGame = () => {
   fail = false
   click.play();
@@ -209,8 +230,9 @@ const restartGame = () => {
   eGameOver.classList.remove("show");
   eOverlay.classList.remove("show");
 };
+//-------------------------------restart game-----------------------------------//
 
-
+//--------------------------------pause game------------------------------------//
 function pauseGame() {
   if (pauseClick === true) {
     pauseClick = false
@@ -240,7 +262,9 @@ function pauseGame() {
     return;
   }
 }
+//--------------------------------pause game------------------------------------//
 
+//---------------------------------lose game------------------------------------//
 const loseGame = () => {
   bigBoom.volume = 0.1;
   bigBoom.play();
@@ -274,7 +298,9 @@ const loseGame = () => {
   eOverlay.style.height = "100%";
   clearInterval(iTS);
 };
+//---------------------------------lose game------------------------------------//
 
+//----------------------show wrong mines and rigth mines------------------------//
 function newMatrix(w, h, v) {
   const matrix = [];
   for (let i = 0; i < h; i++) {
@@ -454,6 +480,9 @@ function revealCell(x, y) {
     });
   }
 }
+//----------------------show wrong mines and rigth mines------------------------//
+
+//----------------------------volume function-----------------------------------//
 function volumeChange() {
   click.volume = volumeSet;
   wind.volume = volumeSet;
@@ -468,12 +497,15 @@ function musicChange() {
   } else {
     eMusic.play();
   }
-}
+}//----------------------------volume function-----------------------------------//
 
+//-----------------------------getCell function----------------------------------//
 function getCell(x, y) {
   return eBoard.children[x].children[y];
 }
+//-----------------------------getCell function----------------------------------//
 
+//-------------------------generate board function-------------------------------//
 function generateBoard() {
   board = [];
   totalMines = 0;
@@ -489,6 +521,9 @@ function generateBoard() {
     board.push(row);
   }
 }
+//-------------------------generate board function-------------------------------//
+
+//--------------------------show settings function-------------------------------//
 function showSettings() {
   if (showSetting === false) {
     eSetSettings.style.visibility = "visible";
@@ -509,7 +544,9 @@ function showSettings() {
     return;
   }
 }
+//--------------------------show settings function-------------------------------//
 
+//----------------------------start game function--------------------------------//
 eGameStart.addEventListener("click", () => {
   isPlaying = true;
   console.log(isPlaying);
@@ -525,7 +562,9 @@ eGameStart.addEventListener("click", () => {
   ePauseBtn.addEventListener("click", () => { restartGame(); createDOM(); pauseGame() });
   eRestartBtn.addEventListener("click", () => { restartGame(); createDOM() });
 })
+//----------------------------start game function--------------------------------//
 
+//---------------------------pause button function-------------------------------//
 eMenuBtn.addEventListener('click', () => {
   isPlaying = false
   console.log(isPlaying);
@@ -547,6 +586,9 @@ ePauseMenuBtn.addEventListener('click', () => {
   eGameOver.classList.remove("show");
   eOverlay.classList.remove("show");
 });
+//---------------------------pause button function-------------------------------//
+
+//---------------------------custom mode functiome-------------------------------//
 eGameSelectRadio.forEach(radio => {
   radio.addEventListener('change', () => {
     click.play();
@@ -560,22 +602,28 @@ eGameSelectRadio.forEach(radio => {
   })
 
 })
+//---------------------------custom mode functiome-------------------------------//
 
+//---------------------------pasue showing function-------------------------------//
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape" && isPlaying === true && fail === false) {
     event.preventDefault();
     pauseGame()
   }
 });
+//---------------------------custom mode functiome-------------------------------//
+
+//---------------------------pause button function-------------------------------//
 eResumeBtn.addEventListener('click', () => {
-  console.log("elo");
   pauseGame()
 })
 
 eSettingsShow.addEventListener("click", () => {
   showSettings()
 })
+//---------------------------pause button function-------------------------------//
 
+//----------------------------volume function-----------------------------------//
 function syncVolume(source, target) {
   sliderSound.play();
   volumeSet = Number(source.value);
@@ -609,7 +657,9 @@ function syncMusic(source, target) {
   }
   musicChange();
 }
+//----------------------------volume function-----------------------------------//
 
+//-------------------------pasue settings kliks---------------------------------//
 eVolumeSet.addEventListener("input", e => syncVolume(e.target, ePauseVolumeSet));
 ePauseVolumeSet.addEventListener("input", e => syncVolume(e.target, eVolumeSet));
 
@@ -621,7 +671,9 @@ eDarkModeBtnPause.addEventListener("click", () => { darkMode(); });
 
 eLightModeBtn.addEventListener("click", () => { ligthMode(); });
 eLightModeBtnPause.addEventListener("click", () => { ligthMode(); });
+//-------------------------pasue settings kliks---------------------------------//
 
+//---------------------------pause button function-------------------------------//
 eSettingsPauseBtn.addEventListener("click", () => {
   if (showSettingsPause === false) {
     wind.play();
@@ -649,3 +701,4 @@ eBackBtn.addEventListener("click", () => {
     return;
   }
 });
+//---------------------------pause button function-------------------------------//
