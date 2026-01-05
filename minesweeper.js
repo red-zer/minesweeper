@@ -646,7 +646,6 @@ eBackBtn.addEventListener("click", () => {
     eResumeBtn.style.visibility = "visible";
     ePauseMenuBtn.style.visibility = "visible";
     ePauseBtn.style.visibility = "visible";
-    //eBackBtn.style.marginTop = "0px";
     return;
   }
 });

@@ -383,3 +383,25 @@ img {
   text-align: center;
   margin-bottom: 10px;
 }
+.check_slider, #slider-mine, #slider-w-and-h {
+  appearance: none;
+  width: 20rem;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.check_slider::-moz-range-track, #slider-mine::-moz-range-track, #slider-w-and-h::-moz-range-track {
+  height: 6px;
+  background: #444;
+  border-radius: 6px;
+}
+
+.check_slider::-moz-range-thumb, #slider-mine::-moz-range-thumb, #slider-w-and-h::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: url("./assets/mine.png") no-repeat center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+}
