@@ -103,12 +103,17 @@ img {
 .menu-btn,
 #resumeButton,
 #game-start,
-#settingsButton {
+#settingsButton,
+#Back {
   border: none;
   color: color-mix(in oklch, red 50%, #0008 50%);
   background-color: #0003;
   cursor: pointer;
   border: 4px solid currentColor;
+}
+
+#Back {
+  visibility: hidden;
 }
 
 #game-start {
@@ -323,7 +328,7 @@ img {
   left: 15px;
   width: 20px;
   height: 20px;
-  background: #222;
+  background: #666;
   border-radius: 50%;
   z-index: 2;
 }
@@ -369,10 +374,12 @@ img {
   visibility: hidden;
   width: 10rem;
   height: fit-content;
-  background-color: #666;
-  border: 5px solid #444;
 }
 #pauseSettings {
   color: black;
   text-shadow: none;
+}
+#h2Setting {
+  text-align: center;
+  margin-bottom: 10px;
 }

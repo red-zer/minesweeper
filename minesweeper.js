@@ -37,6 +37,8 @@ const ePauseVolumeSet = document.querySelector("#pauseVolumeSet")
 const ePauseMusicSet = document.querySelector("#pauseMusicSet")
 const ePauseInfoVolume = document.querySelector("#pauseInfoVolume")
 const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
+const ePauseSettings = document.querySelector("#pauseSettings")
+const eBackBtn = document.querySelector("#Back")
 
 const click = new Audio('sounds/click.mp3');
 const wind = new Audio('sounds/wind.mp3');
@@ -131,6 +133,8 @@ function darkMode() {
   eMineStatText.style.backgroundColor = "#0008";
   eOverlay.style.backgroundColor = "#4448";
   //--------------------------------------------//
+  ePauseSettings.style.border = "5px solid #444";
+  ePauseSettings.style.backgroundColor = "#666";
 }
 function ligthMode() {
   click.play();
@@ -151,7 +155,8 @@ function ligthMode() {
   eTimeStatText.style.backgroundColor = "#fff8";
   eMineStatText.style.backgroundColor = "#fff8";
   eOverlay.style.backgroundColor = "#fff8";
-
+  ePauseSettings.style.border = "5px solid #ccc";
+  ePauseSettings.style.backgroundColor = "#eee";
 }
 
 darkMode();
@@ -204,16 +209,25 @@ const restartGame = () => {
 
 function pauseGame() {
   if (pauseClick === true) {
+    pauseClick = false
     showSettingsPause = false;
     eSettingPause.style.visibility = "hidden";
-    pauseClick = false
     ePauseMenu.style.visibility = 'hidden'
+    eBackBtn.style.visibility = "hidden";
+    eResumeBtn.style.visibility = "hidden";
+    ePauseMenuBtn.style.visibility = "hidden";
+    ePauseBtn.style.visibility = "hidden";
+    eSettingsPauseBtn.style.visibility = "hidden";
     document.body.style.overflow = "auto";
     return;
   }
   if (pauseClick === false) {
     pauseClick = true
     ePauseMenu.style.visibility = 'visible'
+    eResumeBtn.style.visibility = "visible";
+    ePauseMenuBtn.style.visibility = "visible";
+    ePauseBtn.style.visibility = "visible";
+    eSettingsPauseBtn.style.visibility = "visible";
     document.body.style.overflow = "hidden";
     ePauseMenu.style.position = "fixed";
     ePauseMenu.style.top = "50%";
@@ -555,7 +569,6 @@ function syncVolume(source, target) {
     eInfoVolume.innerHTML = percent;
     ePauseInfoVolume.innerHTML = percent;
   }
-
   volumeChange();
 }
 
@@ -587,15 +600,30 @@ eLightModeBtn.addEventListener("click", () => { ligthMode(); });
 eLightModeBtnPause.addEventListener("click", () => { ligthMode(); });
 
 eSettingsPauseBtn.addEventListener("click", () => {
-  console.log("work");
-  if (showSettingsPause === true) {
-    showSettingsPause = false;
-    eSettingPause.style.visibility = "hidden";
-    return;
-  }
   if (showSettingsPause === false) {
+    wind.play();
     showSettingsPause = true;
     eSettingPause.style.visibility = "visible";
+    eBackBtn.style.visibility = "visible";
+    eSettingsPauseBtn.style.visibility = "hidden";
+    eResumeBtn.style.visibility = "hidden";
+    ePauseMenuBtn.style.visibility = "hidden";
+    ePauseBtn.style.visibility = "hidden";
+    eBackBtn.style.marginTop = "-140px";
+    return;
+  }
+});
+eBackBtn.addEventListener("click", () => {
+  if (showSettingsPause === true) {
+    wind.play();
+    showSettingsPause = false;
+    eSettingPause.style.visibility = "hidden";
+    eBackBtn.style.visibility = "hidden";
+    eSettingsPauseBtn.style.visibility = "visible";
+    eResumeBtn.style.visibility = "visible";
+    ePauseMenuBtn.style.visibility = "visible";
+    ePauseBtn.style.visibility = "visible";
+    eBackBtn.style.marginTop = "0px";
     return;
   }
 });
