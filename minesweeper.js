@@ -259,6 +259,15 @@ const loseGame = () => {
   }
   eGameOver.classList.add("show");
   eOverlay.classList.add("show");
+  eGameOver.style.position = "fixed";
+  eGameOver.style.top = "50%";
+  eGameOver.style.left = "50%";
+  eGameOver.style.transform = "translate(-50%, -50%)";
+  eOverlay.style.position = "fixed";
+  eOverlay.style.top = "0";
+  eOverlay.style.left = "0";
+  eOverlay.style.width = "100%";
+  eOverlay.style.height = "100%";
   clearInterval(iTS);
 };
 
