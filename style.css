@@ -385,10 +385,12 @@ img {
 }
 .check_slider, #slider-mine, #slider-w-and-h {
   appearance: none;
-  width: 20rem;
   height: 24px;
   background: transparent;
   cursor: pointer;
+}
+#slider-mine, #slider_w_and_h {
+  width: 20rem;
 }
 
 .check_slider::-moz-range-track, #slider-mine::-moz-range-track, #slider-w-and-h::-moz-range-track {

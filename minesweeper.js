@@ -62,7 +62,9 @@ let revealedCells = newMatrix(WIDTH, HEIGHT, false);
 let board = [];
 
 let isFirstClick = true;
+
 let totalMines = 0;
+let timeInGame = 90;
 let flagsPlaced = 0;
 
 let startTS;
@@ -187,7 +189,16 @@ const padNum = (s) => {
 };
 
 const updateTimeStat = () => {
-  eTimeStat.innerHTML = padNum(Math.floor((new Date() - startTS) / 1000));
+  if (pauseClick === true) return
+  timeInGame++
+  if (timeInGame < 9) {
+    eTimeStat.innerHTML = `00${timeInGame}`
+  } else if (timeInGame < 99 && timeInGame > 9) {
+    eTimeStat.innerHTML = `0${timeInGame}`
+  } else {
+    eTimeStat.innerHTML = timeInGame
+  }
+  //eTimeStat.innerHTML = timeInGame; 
 };
 
 const updateMineStat = () => {
@@ -218,6 +229,8 @@ const startGame = (x, y) => {
 
 //-------------------------------restart game-----------------------------------//
 const restartGame = () => {
+  timeInGame = 0
+  iTS = 0
   fail = false
   click.play();
   isFirstClick = true;
