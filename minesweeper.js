@@ -88,7 +88,7 @@ const WRONG_FLAG_OVERLAY_IMG = createImgElem("./assets/wrong_flag_overlay.png");
 //------------------------------- images --------------------------------------//
 
 //------------------------------- title generate ------------------------------//
-const tittleText = "NSWAPEER"
+const tittleText = "MINESWEEPER"
 
 const NUMBER_COLORS = [
   "0201ff",
@@ -108,26 +108,37 @@ const NUMBER_COLORS_TEXT = [
   "#00007f",
   "#7c0000",
   "#038082",
-  "#010101",
   "#828282",
 ];
 
 function generateText(text) {
   const divText = document.createElement('div');
+  divText.id = "tittleSpans"
   eGameTittle.appendChild(divText)
   for (let i = 0; i < text.length; i++) {
     const spanText = document.createElement('span');
-    spanText.textContent = text[i];
+    if (text[i] == "I" || text[i] == "i") {
+      spanText.innerHTML = `<img src="./assets/flag.png" style="height: 1ch">`
+    } else if (text[i] == "o" || text[i] == "O") {
+      spanText.innerHTML = `<img src="./assets/mine.png" style="height: 1ch">`
+    } else {
+      spanText.textContent = text[i];
+    }
     spanText.id = `span${i}`
     divText.appendChild(spanText);
   }
   return divText.children;
 }
 function textColorAndTetx() {
+  let j = 0;
   const generateBoard = (generateText(tittleText))
   for (let i = 0; i < tittleText.length; i++) {
+    if (j == NUMBER_COLORS_TEXT.length) {
+      j = 0;
+    }
     const spanTextColor = document.getElementById(`span${i}`)
-    spanTextColor.style.color = NUMBER_COLORS_TEXT[i];
+    spanTextColor.style.color = NUMBER_COLORS_TEXT[j];
+    j++
   }
 }
 textColorAndTetx();
