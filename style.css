@@ -179,11 +179,11 @@ img {
   * {
     text-align: center;
     padding: 2px 4px;
-
   }
 
   .time,
-  .mines {
+  .mines,
+  #emoji {
     position: absolute;
     top: 0;
     width: fit-content;
@@ -192,10 +192,13 @@ img {
   }
 
   .mines {
-    left: 100%;
+    left: 10%;
     transform: translateX(-100%);
   }
-
+  #emoji {
+    left: 100%;
+    transform: translateX(-15rem);
+  }
   .text-writen {
     font-size: smaller;
   }

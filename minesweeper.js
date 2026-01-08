@@ -39,6 +39,7 @@ const ePauseInfoVolume = document.querySelector("#pauseInfoVolume")
 const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
 const ePauseSettings = document.querySelector("#pauseSettings")
 const eBackBtn = document.querySelector("#Back")
+const eEmoji = document.querySelector("#emojiDisplay")
 //-------------------------------- DOM Elements -----------------------------//
 
 //------------------------------- music -------------------------------------//
@@ -78,6 +79,12 @@ let showSettingsPause = false;
 
 let volumeSet = 100;
 let musicSet = 100;
+
+const emoji = [
+  "🙂",
+  "😯",
+  "😵",
+]
 //-------------------------------- varibles -----------------------------------//
 
 //------------------------------- images --------------------------------------//
@@ -129,7 +136,6 @@ function colorDuplicates() {
   const indexDuplicats = duplication()[0][duplication().length];
   const spanDupStyle = document.querySelector(`.span${"E"}`)
   const styleDup = spanDupStyle.style
-  console.log(spanDupStyle)
   for (let i = 0; i < indexDuplicats.length; i++) {
     const spanDup = document.getElementById(indexDuplicats[i])
     const s = getComputedStyle(spanDupStyle);
@@ -172,7 +178,6 @@ function textColorAndTetx() {
 }
 textColorAndTetx();
 colorDuplicates();
-console.log()
 //------------------------------- title generate -------------------------------//
 
 //------------------------------ dark and ligth mode----------------------------//
@@ -227,7 +232,7 @@ darkMode();
 
 //---------------------informatin about mines left and time---------------------//
 const padNum = (s) => {
-  return s.toString().padStart(2, "0");
+  return s.toString().padStart(3, "0");
 };
 
 const updateTimeStat = () => {
@@ -271,6 +276,7 @@ const startGame = (x, y) => {
 
 //-------------------------------restart game-----------------------------------//
 const restartGame = () => {
+  eEmoji.innerHTML = emoji[0]
   timeInGame = 0
   iTS = 0
   fail = false
@@ -321,6 +327,7 @@ function pauseGame() {
 
 //---------------------------------lose game------------------------------------//
 const loseGame = () => {
+  eEmoji.innerHTML = emoji[2]
   bigBoom.volume = 0.1;
   bigBoom.play();
   bigBoom.currentTime = 0;
@@ -604,7 +611,6 @@ function showSettings() {
 //----------------------------start game function--------------------------------//
 eGameStart.addEventListener("click", () => {
   isPlaying = true;
-  console.log(isPlaying);
   click.play();
   const selected = document.querySelector("[name='game-select']:checked")
   WIDTH = selected.getAttribute("data-width")
@@ -622,7 +628,6 @@ eGameStart.addEventListener("click", () => {
 //---------------------------pause button function-------------------------------//
 eMenuBtn.addEventListener('click', () => {
   isPlaying = false
-  console.log(isPlaying);
   click.play();
   restartGame();
   gameScreen.classList.add("hidden")
@@ -633,7 +638,6 @@ eMenuBtn.addEventListener('click', () => {
 ePauseMenuBtn.addEventListener('click', () => {
   pauseGame();
   isPlaying = false
-  console.log(isPlaying);
   click.play();
   restartGame();
   gameScreen.classList.add("hidden")
@@ -757,3 +761,12 @@ eBackBtn.addEventListener("click", () => {
   }
 });
 //---------------------------pause button function-------------------------------//
+
+//--------------------------------emoji change-----------------------------------//
+eBoard.addEventListener("mousedown", () => {
+  eEmoji.innerHTML = emoji[1]
+});
+
+eBoard.addEventListener("mouseup", () => {
+  eEmoji.innerHTML = emoji[0]
+});
