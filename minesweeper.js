@@ -88,8 +88,8 @@ const WRONG_FLAG_OVERLAY_IMG = createImgElem("./assets/wrong_flag_overlay.png");
 //------------------------------- images --------------------------------------//
 
 //------------------------------- title generate ------------------------------//
-const tittleText = "MINESWEEPER"
 
+const tittleText = "MINESWEEPER"
 const NUMBER_COLORS = [
   "0201ff",
   "1c7718",
@@ -105,11 +105,38 @@ const NUMBER_COLORS_TEXT = [
   "#0201ff",
   "#1c7718",
   "#fa0300",
+  "",
   "#00007f",
   "#7c0000",
   "#038082",
   "#828282",
 ];
+const letterInTittleText = []
+
+function duplication() {
+  const indicesMap = {};
+  letterInTittleText.forEach((letter, index) => {
+    if (!indicesMap[letter]) {
+      indicesMap[letter] = [];
+    }
+    indicesMap[letter].push(index);
+  });
+  const duplicatesWithIndices = Object.entries(indicesMap)
+    .filter(([letter, indices]) => indices.length > 1);
+  return duplicatesWithIndices;
+}
+function colorDuplicates() {
+  const indexDuplicats = duplication()[0][duplication().length];
+  const spanDupStyle = document.querySelector(`.span${"E"}`)
+  const styleDup = spanDupStyle.style
+  console.log(spanDupStyle)
+  for (let i = 0; i < indexDuplicats.length; i++) {
+    const spanDup = document.getElementById(indexDuplicats[i])
+    const s = getComputedStyle(spanDupStyle);
+    for (const p of s) spanDup.style[p] = s.getPropertyValue(p);
+
+  }
+}
 
 function generateText(text) {
   const divText = document.createElement('div');
@@ -124,7 +151,8 @@ function generateText(text) {
     } else {
       spanText.textContent = text[i];
     }
-    spanText.id = `span${i}`
+    spanText.className = `span${tittleText[i]}`
+    spanText.id = i
     divText.appendChild(spanText);
   }
   return divText.children;
@@ -136,12 +164,15 @@ function textColorAndTetx() {
     if (j == NUMBER_COLORS_TEXT.length) {
       j = 0;
     }
-    const spanTextColor = document.getElementById(`span${i}`)
-    spanTextColor.style.color = NUMBER_COLORS_TEXT[j];
+    const spanStyle = document.querySelector(`.span${tittleText[i]}`);
+    spanStyle.style.color = NUMBER_COLORS_TEXT[j];
     j++
+    letterInTittleText.push(spanStyle.innerHTML)
   }
 }
 textColorAndTetx();
+colorDuplicates();
+console.log()
 //------------------------------- title generate -------------------------------//
 
 //------------------------------ dark and ligth mode----------------------------//
