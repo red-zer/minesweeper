@@ -84,6 +84,9 @@ const emoji = [
   "🙂",
   "😯",
   "😵",
+  "😎",
+  "🧐",
+  "🤐",
 ]
 //-------------------------------- varibles -----------------------------------//
 
@@ -276,17 +279,17 @@ const startGame = (x, y) => {
 
 //-------------------------------restart game-----------------------------------//
 const restartGame = () => {
-  eEmoji.innerHTML = emoji[0]
-  timeInGame = 0
-  iTS = 0
-  fail = false
+  eEmoji.innerHTML = emoji[0];
+  timeInGame = 0;
+  iTS = 0;
+  fail = false;
   click.play();
   isFirstClick = true;
   board = [];
   totalMines = 0;
   flagsPlaced = 0;
-  eTimeStat.innerHTML = "00";
-  eMineStat.innerHTML = "00";
+  eTimeStat.innerHTML = "000";
+  eMineStat.innerHTML = "000";
   eBoard.textContent = ""
   eGameOver.classList.remove("show");
   eOverlay.classList.remove("show");
@@ -296,6 +299,7 @@ const restartGame = () => {
 //--------------------------------pause game------------------------------------//
 function pauseGame() {
   if (pauseClick === true) {
+    eEmoji.innerHTML = emoji[0]
     pauseClick = false
     showSettingsPause = false;
     eSettingPause.style.visibility = "hidden";
@@ -309,6 +313,7 @@ function pauseGame() {
     return;
   }
   if (pauseClick === false) {
+    eEmoji.innerHTML = emoji[3]
     pauseClick = true
     ePauseMenu.style.visibility = 'visible'
     eResumeBtn.style.visibility = "visible";
@@ -685,6 +690,7 @@ eSettingsShow.addEventListener("click", () => {
 //----------------------------volume function-----------------------------------//
 function syncVolume(source, target) {
   sliderSound.play();
+  eEmoji.innerHTML = emoji[5];
   volumeSet = Number(source.value);
   source.value = volumeSet;
   target.value = volumeSet;
@@ -702,6 +708,7 @@ function syncVolume(source, target) {
 
 function syncMusic(source, target) {
   sliderSound.play();
+  eEmoji.innerHTML = emoji[5];
   musicSet = Number(source.value);
   source.value = musicSet;
   target.value = musicSet;
@@ -736,6 +743,7 @@ eLightModeBtnPause.addEventListener("click", () => { ligthMode(); });
 eSettingsPauseBtn.addEventListener("click", () => {
   if (showSettingsPause === false) {
     wind.play();
+    eEmoji.innerHTML = emoji[4]
     showSettingsPause = true;
     eSettingPause.style.visibility = "visible";
     eBackBtn.style.visibility = "visible";
@@ -749,6 +757,7 @@ eSettingsPauseBtn.addEventListener("click", () => {
 });
 eBackBtn.addEventListener("click", () => {
   if (showSettingsPause === true) {
+    eEmoji.innerHTML = emoji[3]
     wind.play();
     showSettingsPause = false;
     eSettingPause.style.visibility = "hidden";
@@ -770,3 +779,5 @@ eBoard.addEventListener("mousedown", () => {
 eBoard.addEventListener("mouseup", () => {
   eEmoji.innerHTML = emoji[0]
 });
+//--------------------------------emoji change-----------------------------------//
+
