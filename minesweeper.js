@@ -65,7 +65,7 @@ let board = [];
 let isFirstClick = true;
 
 let totalMines = 0;
-let timeInGame = 90;
+let timeInGame = 0;
 let flagsPlaced = 0;
 
 let startTS;
@@ -98,8 +98,8 @@ const WRONG_FLAG_OVERLAY_IMG = createImgElem("./assets/wrong_flag_overlay.png");
 //------------------------------- images --------------------------------------//
 
 //------------------------------- title generate ------------------------------//
-
 const tittleText = "MINESWEEPER"
+
 const NUMBER_COLORS = [
   "0201ff",
   "1c7718",
@@ -136,14 +136,17 @@ function duplication() {
   return duplicatesWithIndices;
 }
 function colorDuplicates() {
-  const indexDuplicats = duplication()[0][duplication().length];
-  const spanDupStyle = document.querySelector(`.span${"E"}`)
-  const styleDup = spanDupStyle.style
-  for (let i = 0; i < indexDuplicats.length; i++) {
-    const spanDup = document.getElementById(indexDuplicats[i])
-    const s = getComputedStyle(spanDupStyle);
-    for (const p of s) spanDup.style[p] = s.getPropertyValue(p);
-
+  for (let i = 0; i < duplication().length; i++) {
+    let j = 0;
+    const spanDupStyle = document.querySelector(`.span${duplication()[i][0]}`)
+    const duplications = duplication()[i][duplication().length]
+    const spanDup = document.querySelectorAll(`.span${duplication()[i][0]}`)
+    spanDup.forEach((o) => {
+      j++
+      const spanColor = document.getElementById(`span${duplications[j - 1]}`)
+      const s = getComputedStyle(spanDupStyle);
+      for (const p of s) spanColor.style[p] = s.getPropertyValue(p);
+    });
   }
 }
 
@@ -154,14 +157,14 @@ function generateText(text) {
   for (let i = 0; i < text.length; i++) {
     const spanText = document.createElement('span');
     if (text[i] == "I" || text[i] == "i") {
-      spanText.innerHTML = `<img src="./assets/flag.png" style="height: 1ch">`
+      spanText.innerHTML = `<img src="./assets/flag.png" class="imgInTittle");">`
     } else if (text[i] == "o" || text[i] == "O") {
-      spanText.innerHTML = `<img src="./assets/mine.png" style="height: 1ch">`
+      spanText.innerHTML = `<img src="./assets/mine.png" class="imgInTittle">`
     } else {
       spanText.textContent = text[i];
     }
     spanText.className = `span${tittleText[i]}`
-    spanText.id = i
+    spanText.id = `span${i}`
     divText.appendChild(spanText);
   }
   return divText.children;
@@ -241,7 +244,7 @@ const padNum = (s) => {
 const updateTimeStat = () => {
   if (pauseClick === true) return
   timeInGame++
-  if (timeInGame < 9) {
+  if (timeInGame < 10) {
     eTimeStat.innerHTML = `00${timeInGame}`
   } else if (timeInGame < 99 && timeInGame > 9) {
     eTimeStat.innerHTML = `0${timeInGame}`
@@ -281,7 +284,7 @@ const startGame = (x, y) => {
 const restartGame = () => {
   eEmoji.innerHTML = emoji[0];
   timeInGame = 0;
-  iTS = 0;
+  //iTS = 0;
   fail = false;
   click.play();
   isFirstClick = true;
@@ -290,9 +293,10 @@ const restartGame = () => {
   flagsPlaced = 0;
   eTimeStat.innerHTML = "000";
   eMineStat.innerHTML = "000";
-  eBoard.textContent = ""
+  eBoard.textContent = "";
   eGameOver.classList.remove("show");
   eOverlay.classList.remove("show");
+  clearInterval(iTS);
 };
 //-------------------------------restart game-----------------------------------//
 

@@ -410,3 +410,8 @@ img {
   border: none;
   cursor: pointer;
 }
+.imgInTittle {
+  height: 1ch;
+  width: 1ch;
+  background-color: #333;
+}
