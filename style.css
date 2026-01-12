@@ -104,12 +104,20 @@ img {
 #resumeButton,
 #game-start,
 #settingsButton,
-#Back {
+#Back,
+#exit {
   border: none;
   color: color-mix(in oklch, red 50%, #0008 50%);
   background-color: #0003;
   cursor: pointer;
   border: 4px solid currentColor;
+}
+#exit {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  position: absolute;
 }
 
 #Back {
