@@ -788,5 +788,6 @@ eBoard.addEventListener("mouseup", () => {
 
 //-------------------------------------exit--------------------------------------//
 eExit.addEventListener("click", () => {
+  click.play();
   window.location.href = "/menu_index.html";
 });
