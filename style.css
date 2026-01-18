@@ -104,8 +104,7 @@ img {
 #resumeButton,
 #game-start,
 #settingsButton,
-#Back,
-#exit {
+#Back {
   border: none;
   color: color-mix(in oklch, red 50%, #0008 50%);
   background-color: #0003;

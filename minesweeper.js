@@ -40,7 +40,6 @@ const ePauseInfoMusic = document.querySelector("#pauseInfoMusic")
 const ePauseSettings = document.querySelector("#pauseSettings")
 const eBackBtn = document.querySelector("#Back")
 const eEmoji = document.querySelector("#emojiDisplay")
-const eExit = document.querySelector("#exit")
 //-------------------------------- DOM Elements -----------------------------//
 
 //------------------------------- music -------------------------------------//
@@ -785,9 +784,3 @@ eBoard.addEventListener("mouseup", () => {
   eEmoji.innerHTML = emoji[0]
 });
 //--------------------------------emoji change-----------------------------------//
-
-//-------------------------------------exit--------------------------------------//
-eExit.addEventListener("click", () => {
-  click.play();
-  window.location.href = "/menu_index.html";
-});
